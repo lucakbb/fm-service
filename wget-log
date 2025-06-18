@@ -1,0 +1,6 @@
+--2025-06-18 19:08:19--  https://media.licdn.com/dms/image/v2/C4E03AQH4Y2QXSr-zRw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1662552261842?e=1755734400
+Resolving media.licdn.com (media.licdn.com)... 2a02:26f0:3000::170a:f930, 2a02:26f0:3000::170a:f923, 23.10.249.35, ...
+Connecting to media.licdn.com (media.licdn.com)|2a02:26f0:3000::170a:f930|:443... connected.
+HTTP request sent, awaiting response... 403 Forbidden
+2025-06-18 19:08:19 ERROR 403: Forbidden.
+
