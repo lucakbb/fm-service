@@ -1,82 +1,101 @@
 {
   "gpt-4.1": {
     "gpt-4.1": 0.0,
-    "swissai/apertus3-70b-4T-sft": 781.0,
-    "swissai/apertus3-70b-iter_304250": 776.0,
-    "swissai/apertus3-70b-iter_90000": 784.5,
-    "swissai/apertus3-8b-6.3T-sft": 792.5,
-    "swissai/apertus3-8b-iter_90000": 787.5,
-    "claude-3-5-sonnet-20241022": 641.0,
-    "gemini-1.5-flash-8b": 597.5
-  },
-  "swissai/apertus3-70b-4T-sft": {
-    "gpt-4.1": 24.0,
-    "swissai/apertus3-70b-4T-sft": 0.0,
-    "swissai/apertus3-70b-iter_304250": 435.5,
-    "swissai/apertus3-70b-iter_90000": 483.0,
-    "swissai/apertus3-8b-6.3T-sft": 539.5,
-    "swissai/apertus3-8b-iter_90000": 559.0,
-    "claude-3-5-sonnet-20241022": 139.5,
-    "gemini-1.5-flash-8b": 138.5
-  },
-  "swissai/apertus3-70b-iter_304250": {
-    "gpt-4.1": 29.0,
-    "swissai/apertus3-70b-4T-sft": 369.5,
-    "swissai/apertus3-70b-iter_304250": 0.0,
-    "swissai/apertus3-70b-iter_90000": 462.0,
-    "swissai/apertus3-8b-6.3T-sft": 537.0,
-    "swissai/apertus3-8b-iter_90000": 546.5,
-    "claude-3-5-sonnet-20241022": 124.0,
-    "gemini-1.5-flash-8b": 131.0
-  },
-  "swissai/apertus3-70b-iter_90000": {
-    "gpt-4.1": 20.5,
-    "swissai/apertus3-70b-4T-sft": 322.0,
-    "swissai/apertus3-70b-iter_304250": 343.0,
-    "swissai/apertus3-70b-iter_90000": 0.0,
-    "swissai/apertus3-8b-6.3T-sft": 486.0,
-    "swissai/apertus3-8b-iter_90000": 499.5,
-    "claude-3-5-sonnet-20241022": 116.5,
-    "gemini-1.5-flash-8b": 116.5
-  },
-  "swissai/apertus3-8b-6.3T-sft": {
-    "gpt-4.1": 12.5,
-    "swissai/apertus3-70b-4T-sft": 265.5,
-    "swissai/apertus3-70b-iter_304250": 268.0,
-    "swissai/apertus3-70b-iter_90000": 319.0,
-    "swissai/apertus3-8b-6.3T-sft": 0.0,
-    "swissai/apertus3-8b-iter_90000": 437.0,
-    "claude-3-5-sonnet-20241022": 87.0,
-    "gemini-1.5-flash-8b": 92.5
-  },
-  "swissai/apertus3-8b-iter_90000": {
-    "gpt-4.1": 17.5,
-    "swissai/apertus3-70b-4T-sft": 246.0,
-    "swissai/apertus3-70b-iter_304250": 258.5,
-    "swissai/apertus3-70b-iter_90000": 305.5,
-    "swissai/apertus3-8b-6.3T-sft": 368.0,
-    "swissai/apertus3-8b-iter_90000": 0.0,
-    "claude-3-5-sonnet-20241022": 83.5,
-    "gemini-1.5-flash-8b": 88.5
+    "claude-3-5-sonnet-20241022": 548.0,
+    "gemini-1.5-flash-8b": 567.0,
+    "Apertus3-70B_iter_564750-tulu3-sft": 764.0,
+    "apertus3-70b-4T-sft": 755.0,
+    "apertus3-70b-iter_304250": 755.0,
+    "apertus3-70b-iter_90000": 762.0,
+    "apertus3-8b-6.3T-sft": 775.0,
+    "apertus3-8b-iter_90000": 773.0
   },
   "claude-3-5-sonnet-20241022": {
-    "gpt-4.1": 164.0,
-    "swissai/apertus3-70b-4T-sft": 665.5,
-    "swissai/apertus3-70b-iter_304250": 681.0,
-    "swissai/apertus3-70b-iter_90000": 688.5,
-    "swissai/apertus3-8b-6.3T-sft": 718.0,
-    "swissai/apertus3-8b-iter_90000": 721.5,
+    "gpt-4.1": 257.0,
     "claude-3-5-sonnet-20241022": 0.0,
-    "gemini-1.5-flash-8b": 416.5
+    "gemini-1.5-flash-8b": 437.0,
+    "Apertus3-70B_iter_564750-tulu3-sft": 693.0,
+    "apertus3-70b-4T-sft": 707.0,
+    "apertus3-70b-iter_304250": 713.0,
+    "apertus3-70b-iter_90000": 730.0,
+    "apertus3-8b-6.3T-sft": 734.0,
+    "apertus3-8b-iter_90000": 747.0
   },
   "gemini-1.5-flash-8b": {
-    "gpt-4.1": 207.5,
-    "swissai/apertus3-70b-4T-sft": 666.5,
-    "swissai/apertus3-70b-iter_304250": 674.0,
-    "swissai/apertus3-70b-iter_90000": 688.5,
-    "swissai/apertus3-8b-6.3T-sft": 712.5,
-    "swissai/apertus3-8b-iter_90000": 716.5,
-    "claude-3-5-sonnet-20241022": 388.5,
-    "gemini-1.5-flash-8b": 0.0
+    "gpt-4.1": 238.0,
+    "claude-3-5-sonnet-20241022": 368.0,
+    "gemini-1.5-flash-8b": 0.0,
+    "Apertus3-70B_iter_564750-tulu3-sft": 648.0,
+    "apertus3-70b-4T-sft": 641.0,
+    "apertus3-70b-iter_304250": 647.0,
+    "apertus3-70b-iter_90000": 678.0,
+    "apertus3-8b-6.3T-sft": 714.0,
+    "apertus3-8b-iter_90000": 705.0
+  },
+  "Apertus3-70B_iter_564750-tulu3-sft": {
+    "gpt-4.1": 41.0,
+    "claude-3-5-sonnet-20241022": 112.0,
+    "gemini-1.5-flash-8b": 157.0,
+    "Apertus3-70B_iter_564750-tulu3-sft": 0.0,
+    "apertus3-70b-4T-sft": 406.0,
+    "apertus3-70b-iter_304250": 422.0,
+    "apertus3-70b-iter_90000": 467.0,
+    "apertus3-8b-6.3T-sft": 530.0,
+    "apertus3-8b-iter_90000": 566.0
+  },
+  "apertus3-70b-4T-sft": {
+    "gpt-4.1": 50.0,
+    "claude-3-5-sonnet-20241022": 98.0,
+    "gemini-1.5-flash-8b": 164.0,
+    "Apertus3-70B_iter_564750-tulu3-sft": 399.0,
+    "apertus3-70b-4T-sft": 0.0,
+    "apertus3-70b-iter_304250": 410.0,
+    "apertus3-70b-iter_90000": 464.0,
+    "apertus3-8b-6.3T-sft": 534.0,
+    "apertus3-8b-iter_90000": 571.0
+  },
+  "apertus3-70b-iter_304250": {
+    "gpt-4.1": 50.0,
+    "claude-3-5-sonnet-20241022": 92.0,
+    "gemini-1.5-flash-8b": 158.0,
+    "Apertus3-70B_iter_564750-tulu3-sft": 383.0,
+    "apertus3-70b-4T-sft": 395.0,
+    "apertus3-70b-iter_304250": 0.0,
+    "apertus3-70b-iter_90000": 440.0,
+    "apertus3-8b-6.3T-sft": 536.0,
+    "apertus3-8b-iter_90000": 535.0
+  },
+  "apertus3-70b-iter_90000": {
+    "gpt-4.1": 43.0,
+    "claude-3-5-sonnet-20241022": 75.0,
+    "gemini-1.5-flash-8b": 127.0,
+    "Apertus3-70B_iter_564750-tulu3-sft": 338.0,
+    "apertus3-70b-4T-sft": 341.0,
+    "apertus3-70b-iter_304250": 365.0,
+    "apertus3-70b-iter_90000": 0.0,
+    "apertus3-8b-6.3T-sft": 478.0,
+    "apertus3-8b-iter_90000": 522.0
+  },
+  "apertus3-8b-6.3T-sft": {
+    "gpt-4.1": 30.0,
+    "claude-3-5-sonnet-20241022": 71.0,
+    "gemini-1.5-flash-8b": 91.0,
+    "Apertus3-70B_iter_564750-tulu3-sft": 275.0,
+    "apertus3-70b-4T-sft": 271.0,
+    "apertus3-70b-iter_304250": 269.0,
+    "apertus3-70b-iter_90000": 327.0,
+    "apertus3-8b-6.3T-sft": 0.0,
+    "apertus3-8b-iter_90000": 434.0
+  },
+  "apertus3-8b-iter_90000": {
+    "gpt-4.1": 32.0,
+    "claude-3-5-sonnet-20241022": 58.0,
+    "gemini-1.5-flash-8b": 100.0,
+    "Apertus3-70B_iter_564750-tulu3-sft": 239.0,
+    "apertus3-70b-4T-sft": 234.0,
+    "apertus3-70b-iter_304250": 270.0,
+    "apertus3-70b-iter_90000": 283.0,
+    "apertus3-8b-6.3T-sft": 371.0,
+    "apertus3-8b-iter_90000": 0.0
   }
 }
