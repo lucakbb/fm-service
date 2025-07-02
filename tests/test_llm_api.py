@@ -1,10 +1,11 @@
 import openai
 client = openai.OpenAI(
-    api_key="sk-rc-",
-    base_url="http://localhost:8080/v1",
+    api_key="-",
+    # base_url="http://localhost:8080/v1",
+    base_url="https://fm.autoai.dev/v1",
 )
 response = client.chat.completions.create(
-    model="meta-llama/Llama-3.3-70B-Instruct",
+    model="Qwen/Qwen3-8B",
     messages=[
         {"role": "user", "content": "Hello, how are you?"},
     ]

@@ -48,20 +48,29 @@ def handle_llm_exception(e: Exception):
     max_value=100,
     factor=1.5,
 )
-def llm_proxy(endpoint, api_key, **kwargs) -> ModelResponse:
-    def _completion():
+async def llm_proxy(endpoint, api_key, **kwargs) -> ModelResponse:
+    async def _completion():
         try:
-            client = openai.OpenAI(
+            client = openai.AsyncOpenAI(
                 api_key=api_key,
                 base_url=endpoint,
             )
             kwargs['name']="chat-generation"
-            response = client.chat.completions.create(**kwargs)
+            del kwargs['user_id']
+            response = await client.chat.completions.create(
+                model=kwargs.get('model'),
+                messages=kwargs.get('messages', []),
+                stream=kwargs.get('stream', False),
+                name='chat-generation',
+                metadata={
+                    'langfuse_user_id': kwargs.get('user_id', ''),
+                }
+            )
             return response
         except Exception as e:
             print(f"Error in llm_proxy: {e}")
             handle_llm_exception(e) # this tries fallback requests
     try:
-        return _completion()
+        return await _completion()
     except Exception as e:
         raise e

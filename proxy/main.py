@@ -39,9 +39,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-if os.getenv("LOGFIRE_TOKEN", None):
-    logfire.configure(token=os.getenv("LOGFIRE_TOKEN"))
-    logfire.instrument_fastapi(app, capture_headers=True)
+# if os.getenv("LOGFIRE_TOKEN", None):
+#     logfire.configure(token=os.getenv("LOGFIRE_TOKEN"))
+#     logfire.instrument_fastapi(app, capture_headers=True)
 
 @app.post("/v1/chat/completions")
 async def chat_completion(
@@ -66,7 +66,7 @@ async def chat_completion(
     if data['stream']:
         data['stream_options'] = {"include_usage": True}
     
-    response = llm_proxy(
+    response = await llm_proxy(
         endpoint=settings.ocf_head_addr+"/v1/service/llm/v1/",
         api_key=token,
         **data,
@@ -97,7 +97,7 @@ async def completion(
     if data['stream']:
         data['stream_options'] = {"include_usage": True}
     
-    response = llm_proxy(
+    response = await llm_proxy(
         endpoint=settings.ocf_head_addr+"/v1/service/llm/v1/",
         api_key=token,
         **data,
