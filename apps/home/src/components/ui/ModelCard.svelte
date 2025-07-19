@@ -28,7 +28,7 @@ class="relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-
   <div class="flex flex-col flex-1 truncate">
     <div class="font-semibold">{entry.data.title}
       {#if entry.data.instanceCount > 1}
-        <span class="instance-count">
+        <span class="instance-count" title="Number of launched instances for higher throughput">
           x{entry.data.instanceCount}
         </span>
       {/if}
@@ -59,7 +59,7 @@ class="relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-
     background-color: red;
     color: white;
     font-weight: bold;
-    padding: 2px 6px;
+    padding: 0 6px;
     border-radius: 4px;
   }
 </style>
