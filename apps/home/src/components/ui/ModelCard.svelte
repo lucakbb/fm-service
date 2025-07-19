@@ -8,7 +8,8 @@
           data: {
               title: string;
               description: string;
-              device: string;
+              devices: string[];
+              instanceCount: number;
           };
       };
   }
@@ -25,8 +26,14 @@ class="relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-
 <div class="flex items-center gap-3">
   <img src={logoUrl} alt="Model logo" class="w-8 h-8 object-contain" />
   <div class="flex flex-col flex-1 truncate">
-    <div class="font-semibold">{entry.data.title}</div>
-    <div class="text-sm">on {entry.data.device}</div>
+    <div class="font-semibold">{entry.data.title}
+      {#if entry.data.instanceCount > 1}
+        <span class="instance-count">
+          x{entry.data.instanceCount}
+        </span>
+      {/if}
+    </div>
+    <div class="text-sm">on {entry.data.devices.join(', ')}</div>
   </div>
 </div>
 <svg
@@ -47,3 +54,12 @@ class="relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-
   />
 </svg>
 </a>
+<style>
+  .instance-count {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+</style>

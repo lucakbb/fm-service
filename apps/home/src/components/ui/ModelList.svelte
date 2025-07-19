@@ -9,16 +9,34 @@
         try {
             const response = await fetch("https://api.swissai.cscs.ch/v1/models_detailed");
             const data = await response.json();
-            models = data.data.map(model => ({
+            const rawModels = data.data;
+
+            const modelsMap = new Map();
+
+            for (const model of rawModels) {
+                if (!modelsMap.has(model.id)) {
+                    modelsMap.set(model.id, {
+                        id: model.id,
+                        devices: new Set(),
+                        count: 0,
+                    });
+                }
+                const existing = modelsMap.get(model.id);
+                existing.devices.add(model.device);
+                existing.count++;
+            }
+
+            models = Array.from(modelsMap.values()).map(groupedModel => ({
                 data: {
-                    title: model.id,
-                    description: model.id,
-                    device: model.device,
+                    title: groupedModel.id,
+                    description: groupedModel.id,
+                    devices: Array.from(groupedModel.devices),
+                    instanceCount: groupedModel.count,
                 },
             }));
-        } catch (error) {
-            console.error("Error fetching models:", error);
-            error = error.message;
+        } catch (err) {
+            console.error("Error fetching models:", err);
+            error = err.message;
         }
         finally {
             loading = false;
