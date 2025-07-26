@@ -72,7 +72,10 @@ async def chat_completion(
         **data,
     )
     if 'stream' in data and data['stream'] == True:
-        return StreamingResponse(response_generator(response, response.generation), media_type='text/event-stream')
+        async def stream_generator():
+            async for chunk in response_generator(response, response.generation):
+                yield chunk
+        return StreamingResponse(stream_generator(), media_type='text/event-stream')
     return response
 
 @app.post("/v1/completions")
@@ -103,7 +106,10 @@ async def completion(
         **data,
     )
     if 'stream' in data and data['stream'] == True:
-        return StreamingResponse(response_generator(response, response.generation), media_type='text/event-stream')
+        async def stream_generator():
+            async for chunk in response_generator(response, response.generation):
+                yield chunk
+        return StreamingResponse(stream_generator(), media_type='text/event-stream')
     return response
 
 @app.get("/v1/models_detailed")

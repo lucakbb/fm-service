@@ -3,8 +3,8 @@ import backoff
 from langfuse.openai import openai
 from proxy.protocols import ModelResponse, RetryConstantError, RetryExpoError, UnknownLLMError
 
-def response_generator(response, generation):
-    for chunk in response:
+async def response_generator(response, generation):
+    async for chunk in response:
         data = chunk.to_dict()
         if data.get("usage", None) is not None:
             generation.update(usage={
