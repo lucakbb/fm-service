@@ -83,7 +83,6 @@ def get_profile_from_accesstoken(access_token: str):
         },
     )
     if res.status_code != 200:
-        print(f"Invalid access token: {res.status_code} {res.text}")
         raise Exception(f"Invalid access token: {res.status_code} {res.text}")
     user = res.json()
     return user

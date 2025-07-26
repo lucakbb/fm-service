@@ -5,7 +5,6 @@ from langfuse import Langfuse
 from langfuse.openai import openai
 from proxy.protocols import ModelResponse, RetryConstantError, RetryExpoError, UnknownLLMError
 
-# Initialize Langfuse
 langfuse = Langfuse(
     public_key=os.getenv("LANGFUSE_PUBLIC_KEY"),
     secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
