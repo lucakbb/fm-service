@@ -1,11 +1,21 @@
 import json
 import backoff
+import os
+from langfuse import Langfuse
 from langfuse.openai import openai
 from proxy.protocols import ModelResponse, RetryConstantError, RetryExpoError, UnknownLLMError
+
+# Initialize Langfuse
+langfuse = Langfuse(
+    public_key=os.getenv("LANGFUSE_PUBLIC_KEY"),
+    secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
+    host=os.getenv("LANGFUSE_HOST", "https://cloud.langfuse.com")
+)
 
 async def response_generator(response, generation):
     async for chunk in response:
         data = chunk.to_dict()
+        # In streaming mode, usage information comes in the final chunk
         if data.get("usage", None) is not None:
             generation.update(usage={
                 "promptTokens": data["usage"]["prompt_tokens"],
@@ -55,21 +65,23 @@ async def llm_proxy(endpoint, api_key, **kwargs) -> ModelResponse:
                 api_key=api_key,
                 base_url=endpoint,
             )
-            kwargs['name']="chat-generation"
+            user_id = kwargs.get('user_id', '')
             del kwargs['user_id']
+            
             response = await client.chat.completions.create(
                 model=kwargs.get('model'),
                 messages=kwargs.get('messages', []),
                 stream=kwargs.get('stream', False),
+                stream_options=kwargs.get('stream_options'),
                 name='chat-generation',
                 metadata={
-                    'langfuse_user_id': kwargs.get('user_id', ''),
+                    'langfuse_user_id': user_id,
                 }
             )
             return response
         except Exception as e:
             print(f"Error in llm_proxy: {e}")
-            handle_llm_exception(e) # this tries fallback requests
+            handle_llm_exception(e)
     try:
         return await _completion()
     except Exception as e:

@@ -35,6 +35,11 @@ spec:
         imagePullPolicy: Always
         ports:
           - containerPort: 8080
+        env:
+          - name: REDIS_HOST
+            value: "redis-service.swiss-ai.svc.cluster.local"
+          - name: REDIS_PORT
+            value: "6379"
         envFrom:
           - configMapRef:
               name: serving
@@ -44,7 +49,7 @@ spec:
             memory: 4Gi
           limits:
             cpu: 4000m
-            memory: 8Gi
+            memory: 16Gi
       restartPolicy: Always
 ---
 apiVersion: autoscaling/v2
@@ -58,17 +63,11 @@ spec:
     kind: Deployment
     name: serving-backend
   minReplicas: 1
-  maxReplicas: 10
+  maxReplicas: 8
   metrics:
   - type: Resource
     resource:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 70
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: Utilization
-        averageUtilization: 80
+        averageUtilization: 85

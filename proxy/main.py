@@ -1,6 +1,3 @@
-import os
-
-import logfire
 from contextlib import asynccontextmanager
 from sqlmodel import create_engine
 from typing import Annotated
@@ -75,7 +72,10 @@ async def chat_completion(
         async def stream_generator():
             async for chunk in response_generator(response, response.generation):
                 yield chunk
-        return StreamingResponse(stream_generator(), media_type='text/event-stream')
+        return StreamingResponse(
+            stream_generator(),
+            media_type='text/event-stream'
+        )
     return response
 
 @app.post("/v1/completions")
