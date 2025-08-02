@@ -11,7 +11,26 @@
   
   $: {
     if (matrixData && Object.keys(matrixData).length > 0) {
-      models = Object.keys(matrixData);
+      const allModels = Object.keys(matrixData);
+      
+      // Calculate average win rate for each model
+      const modelAvgs = allModels.map(model => {
+        const opponents = allModels.filter(m => m !== model);
+        const totalWinRate = opponents.reduce((sum, opponent) => {
+          const wins = matrixData[model]?.[opponent] || 0;
+          const total = wins + (matrixData[opponent]?.[model] || 0);
+          const winRate = total > 0 ? wins / total : 0.5;
+          return sum + winRate;
+        }, 0);
+        const avgWinRate = opponents.length > 0 ? totalWinRate / opponents.length : 0.5;
+        return { model, avgWinRate };
+      });
+      
+      // Sort by average win rate (descending)
+      models = modelAvgs
+        .sort((a, b) => b.avgWinRate - a.avgWinRate)
+        .map(item => item.model);
+      
       // Create the matrix with win rates
       matrix = models.map(model1 => 
         models.map(model2 => {
@@ -153,6 +172,13 @@
 
 <div class="space-y-6">
   {#if models.length > 0}
+    <!-- Note -->
+    <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+      <div class="text-sm text-blue-800 dark:text-blue-200">
+        <strong>Note:</strong> This matrix displays percentage of wins of models against models. Some models may have more total battles but lower win percentages. For example, Model A might have 800 battles with 60% wins, while Model B has 200 battles with 95% wins. By ELO rankings Model A might be winning due to volume, but by win percentage Model B performs better.
+      </div>
+    </div>
+
     <!-- Heatmap Table -->
     <div class="relative overflow-x-auto bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
       <table class="matrix-table">

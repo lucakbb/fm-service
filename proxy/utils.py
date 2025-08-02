@@ -6,7 +6,6 @@ import time
 
 base_endpoint = "https://cloud.langfuse.com/api/public/metrics/daily"
 
-
 @lru_cache()
 def get_statistics(api_key: Optional[str] = None, ttl_hash=None):
     # Parse request body for api_key
