@@ -35,11 +35,16 @@
     }
   }
 
-  // Watch for filter changes - trigger when either model selection changes
+  // Watch for filter changes - trigger when either model selection changes or data loads
   $: {
-    if (detailsData.length > 0) {
+    console.log('Filter trigger - dataLoading:', dataLoading, 'detailsData.length:', detailsData.length);
+    if (!dataLoading && detailsData.length > 0) {
       console.log('Filter trigger:', selectedModel1, selectedModel2);
       filterComparisons();
+    } else if (!dataLoading && detailsData.length === 0) {
+      console.log('No data loaded, setting empty filtered comparisons');
+      filteredComparisons = [];
+      displayedComparisons = [];
     }
   }
 
@@ -59,18 +64,32 @@
   async function loadDetailsData() {
     try {
       dataLoading = true;
-      const response = await fetch('/data/arena/details.json');
+      console.log('Starting to fetch details.json...');
+      
+      const url = new URL('/data/arena/details.json', window.location.origin);
+      const response = await fetch(url);
+      console.log('Response received:', response.status, response.statusText);
+      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+      
+      console.log('Starting to parse JSON...');
       const data = await response.json();
+      console.log('JSON parsed successfully, entries:', data.length);
+      
       detailsData = data;
       // Initialize shuffled indices
       shuffledIndices = Array.from({length: data.length}, (_, i) => i);
       dataLoading = false;
-      console.log('Data loaded, entries:', data.length);
+      console.log('Data loaded and processed successfully');
     } catch (error) {
       console.error('Error loading details data:', error);
+      console.error('Error details:', {
+        name: error.name,
+        message: error.message,
+        stack: error.stack
+      });
       dataLoading = false;
     }
   }
@@ -216,8 +235,10 @@
     if (!votes || Object.keys(votes).length === 0) return '';
     
     return Object.entries(votes).map(([voter, decision]) => {
+      if (!decision) return `${voter}: No decision recorded`;
+      
       const reasoning = decision.reasoning || 
-        (decision.winner === 'draw' ? 'Draw - both responses are considered equal.' : `Winner: ${decision.winner}`);
+        (decision.winner === 'draw' ? 'Draw - both responses are considered equal.' : `Winner: ${decision.winner || 'Unknown'}`);
       return `${voter}: ${reasoning}`;
     }).join('\n\n');
   }
