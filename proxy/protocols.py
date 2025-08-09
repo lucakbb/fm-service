@@ -107,7 +107,8 @@ class Message(OpenAIObject):
     role: Literal["assistant"]
     tool_calls: Optional[List[ChatCompletionMessageToolCall]]
     function_call: Optional[FunctionCall]
-
+    raw_prompt: Optional[str] = None
+    raw_output: Optional[str] = None
     def __init__(
         self,
         content: Optional[str] = None,
@@ -146,12 +147,8 @@ class Message(OpenAIObject):
         setattr(self, key, value)
 
     def json(self, **kwargs):
-        try:
-            return self.model_dump()  # noqa
-        except:
-            # if using pydantic v1
-            return self.dict()
-
+        return self.model_dump()  # noqa
+        
 class TopLogprob(OpenAIObject):
     token: str
     bytes: Optional[List[int]] = None
@@ -355,6 +352,8 @@ class ModelResponse(OpenAIObject):
     Can be used in conjunction with the `seed` request parameter to understand when
     backend changes have been made that might impact determinism.
     """
+    raw_prompt: Optional[str] = None
+    raw_output: Optional[str] = None
 
     _hidden_params: dict = {}
 
@@ -428,7 +427,6 @@ class ModelResponse(OpenAIObject):
             "object": object,
             "system_fingerprint": system_fingerprint,
         }
-
         if usage is not None:
             init_values["usage"] = usage
 
@@ -450,12 +448,8 @@ class ModelResponse(OpenAIObject):
         return getattr(self, key)
 
     def json(self, **kwargs):
-        try:
-            return self.model_dump()  # noqa
-        except:
-            # if using pydantic v1
-            return self.dict()
-        
+        return self.model_dump()  # noqa
+
 class RetryConstantError(Exception):
     pass
 class RetryExpoError(Exception):
