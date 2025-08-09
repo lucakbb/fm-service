@@ -1,16 +1,15 @@
 ---
 interface Props {
-  currentPage: 'leaderboard' | 'details' | 'vote';
+  currentPage: 'leaderboard' | 'details';
 }
 
 const navItems: Array<{
   name: string;
   href: string;
-  key: "leaderboard" | "details" | "vote";
+  key: "leaderboard" | "details";
 }> = [
-  { name: 'Leaderboard', href: '/_arena/leaderboard', key: 'leaderboard' },
-  { name: 'Details', href: '/_arena/details', key: 'details' },
-  { name: 'Vote', href: '/_arena/vote', key: 'vote' },
+  { name: 'Leaderboard', href: '/arena/leaderboard', key: 'leaderboard' },
+  { name: 'Details', href: '/arena/details', key: 'details' },
 ];
 
 const { currentPage } = Astro.props;

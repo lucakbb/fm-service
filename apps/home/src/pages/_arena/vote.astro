@@ -3,7 +3,49 @@ import Container from "@components/Container.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import ArenaNav from "@components/ArenaNav.astro";
 import ArenaHeader from "@components/ArenaHeader.astro";
-import { SITE } from "@consts";
+import { SITE, ARENA_AUTH } from "@consts";
+
+// Basic authentication for arena access
+function parseBasicAuth(authHeader: string | null): { username: string; password: string } | null {
+  if (!authHeader || !authHeader.startsWith('Basic ')) {
+    return null;
+  }
+  
+  try {
+    const credentials = atob(authHeader.slice(6));
+    const [username, password] = credentials.split(':');
+    return { username, password };
+  } catch {
+    return null;
+  }
+}
+
+function requireAuth(request: Request): Response | null {
+  const authHeader = request.headers.get('Authorization');
+  const credentials = parseBasicAuth(authHeader);
+  
+  // Arena credentials
+  const validUsername = ARENA_AUTH.USERNAME;
+  const validPassword = ARENA_AUTH.PASSWORD;
+  
+  if (!credentials || credentials.username !== validUsername || credentials.password !== validPassword) {
+    return new Response('Unauthorized', {
+      status: 401,
+      headers: {
+        'WWW-Authenticate': 'Basic realm="Arena Access"',
+        'Content-Type': 'text/plain'
+      }
+    });
+  }
+  
+  return null;
+}
+
+// Check authentication
+const authResult = requireAuth(Astro.request);
+if (authResult) {
+  return authResult;
+}
 
 export const prerender = false;
 ---
@@ -13,7 +55,7 @@ export const prerender = false;
     <div class="space-y-12">
       <ArenaHeader />
 
-      <ArenaNav currentPage="vote" />
+      <!-- <ArenaNav currentPage="vote" /> -->
 
       <!-- Vote Section Header -->
       <div class="animate text-center">
