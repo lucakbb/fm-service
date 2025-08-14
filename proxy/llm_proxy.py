@@ -72,7 +72,7 @@ async def llm_proxy(endpoint, api_key, **kwargs) -> ModelResponse:
                 messages=kwargs.get('messages', []),
                 stream=kwargs.get('stream', False),
                 stream_options=kwargs.get('stream_options'),
-                logprobs=kwargs.get('logprobs'),
+                logprobs=kwargs.get('logprobs', False),
                 max_tokens=kwargs.get('max_tokens', None),
                 temperature=kwargs.get('temperature', 0.7),
                 top_p=kwargs.get('top_p', 1.0),
