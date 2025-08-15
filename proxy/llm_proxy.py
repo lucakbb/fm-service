@@ -78,9 +78,11 @@ async def llm_proxy(endpoint, api_key, **kwargs) -> ModelResponse:
                 temperature=kwargs.get('temperature', 0.7),
                 top_p=kwargs.get('top_p', 1.0),
                 seed=kwargs.get('seed', 42),
+                extra_body=kwargs.get('extra_body', {})
                 name='chat-generation',
                 metadata={
                     'langfuse_user_id': user_id,
+                    'application', kwargs.get('application', 'fmservice')
                 }
             )
             return response
