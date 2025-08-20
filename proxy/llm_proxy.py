@@ -58,6 +58,7 @@ def handle_llm_exception(e: Exception):
     factor=1.5,
 )
 async def llm_proxy(endpoint, api_key, **kwargs) -> ModelResponse:
+    print(f"kwargs: {kwargs}")
     async def _completion():
         try:
             client = openai.AsyncOpenAI(
@@ -66,7 +67,6 @@ async def llm_proxy(endpoint, api_key, **kwargs) -> ModelResponse:
             )
             user_id = kwargs.get('user_id', '')
             del kwargs['user_id']
-            
             response = await client.chat.completions.create(
                 model=kwargs.get('model'),
                 messages=kwargs.get('messages', []),
@@ -78,11 +78,13 @@ async def llm_proxy(endpoint, api_key, **kwargs) -> ModelResponse:
                 temperature=kwargs.get('temperature', 0.7),
                 top_p=kwargs.get('top_p', 1.0),
                 seed=kwargs.get('seed', 42),
-                extra_body=kwargs.get('extra_body', {})
+                presence_penalty=kwargs.get('presence_penalty', 0.0),
+                frequency_penalty=kwargs.get('frequency_penalty', 0.0),
+                extra_body=kwargs.get('extra_body', {}),
                 name='chat-generation',
                 metadata={
                     'langfuse_user_id': user_id,
-                    'application', kwargs.get('application', 'fmservice')
+                    'application': kwargs.get('application', 'fmservice')
                 }
             )
             return response

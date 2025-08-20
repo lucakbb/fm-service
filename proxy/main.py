@@ -15,7 +15,21 @@ engine = None
 settings = get_settings()
 security = HTTPBearer()
 optional_security = HTTPBearer(auto_error=False)
-
+RESERVED_KEYS = [
+    'model',
+    'messages', 
+    'stream', 
+    'stream_options', 
+    'logprobs', 
+    'top_logprobs', 
+    'max_tokens',
+    'temperature',
+    'top_p',
+    'seed',
+    'presence_penalty',
+    'frequency_penalty',
+    'user_id'
+]
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global engine
@@ -62,11 +76,18 @@ async def chat_completion(
             data['stream'] = True # convert to boolean
     if data['stream']:
         data['stream_options'] = {"include_usage": True}
+    reorg_data = {'extra_body': {}}
+    
+    for k, v in data.items():
+        if k in RESERVED_KEYS:
+            reorg_data[k] = v
+        else:
+            reorg_data['extra_body'][k] = v
     
     response = await llm_proxy(
         endpoint=settings.ocf_head_addr+"/v1/service/llm/v1/",
         api_key=token,
-        **data,
+        **reorg_data,
     )
     if 'stream' in data and data['stream'] == True:
         async def stream_generator():

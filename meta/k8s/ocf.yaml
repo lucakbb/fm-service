@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: global-dispatcher
-        image: ghcr.io/xiaozheyao/ocf:amd64-dev
+        image: ghcr.io/xiaozheyao/ocf:amd64-stable
         imagePullPolicy: Always
         args:
           - start
