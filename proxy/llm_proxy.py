@@ -58,7 +58,6 @@ def handle_llm_exception(e: Exception):
     factor=1.5,
 )
 async def llm_proxy(endpoint, api_key, **kwargs) -> ModelResponse:
-    print(f"kwargs: {kwargs}")
     async def _completion():
         try:
             client = openai.AsyncOpenAI(
@@ -82,6 +81,77 @@ async def llm_proxy(endpoint, api_key, **kwargs) -> ModelResponse:
                 frequency_penalty=kwargs.get('frequency_penalty', 0.0),
                 extra_body=kwargs.get('extra_body', {}),
                 name='chat-generation',
+                metadata={
+                    'langfuse_user_id': user_id,
+                    'application': kwargs.get('application', 'fmservice')
+                }
+            )
+            return response
+        except Exception as e:
+            print(f"Error in llm_proxy: {e}")
+            handle_llm_exception(e)
+    try:
+        return await _completion()
+    except Exception as e:
+        raise e
+
+def handle_llm_exception(e: Exception):
+    if isinstance(
+        e,
+        (
+            openai.APIError,
+            openai.Timeout,
+        ),
+    ):
+        raise RetryConstantError from e
+    elif isinstance(e, openai.RateLimitError):
+        raise RetryExpoError from e
+    elif isinstance(
+        e,
+        (
+            openai.APIConnectionError,
+            openai.AuthenticationError,
+        ),
+    ):
+        raise e
+    else:
+        raise UnknownLLMError from e
+
+@backoff.on_exception(
+    wait_gen=backoff.constant,
+    exception=RetryConstantError,
+    max_tries=3,
+    interval=3,
+)
+@backoff.on_exception(
+    wait_gen=backoff.expo,
+    exception=RetryExpoError,
+    jitter=backoff.full_jitter,
+    max_value=100,
+    factor=1.5,
+)
+async def llm_proxy_completions(endpoint, api_key, **kwargs) -> ModelResponse:
+    async def _completion():
+        try:
+            client = openai.AsyncClient(
+                api_key=api_key,
+                base_url=endpoint,
+            )
+            user_id = kwargs.get('user_id', '')
+            del kwargs['user_id']
+            response = await client.completions.create(
+                model=kwargs.get('model'),
+                prompt=kwargs.get('prompt', ''),
+                stream=kwargs.get('stream', False),
+                stream_options=kwargs.get('stream_options'),
+                max_tokens=kwargs.get('max_tokens', None),
+                temperature=kwargs.get('temperature', 0.7),
+                top_p=kwargs.get('top_p', 1.0),
+                seed=kwargs.get('seed', 42),
+                presence_penalty=kwargs.get('presence_penalty', 0.0),
+                frequency_penalty=kwargs.get('frequency_penalty', 0.0),
+                extra_body=kwargs.get('extra_body', {}),
+                name='completions-generation',
                 metadata={
                     'langfuse_user_id': user_id,
                     'application': kwargs.get('application', 'fmservice')

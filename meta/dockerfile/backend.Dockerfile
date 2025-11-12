@@ -6,7 +6,7 @@ WORKDIR /app
 COPY proxy/ /app/proxy
 COPY .env /app
 
-RUN pip install --no-cache-dir -r proxy/requirements.txt
+RUN pip install --no-cache-dir -U -r proxy/requirements.txt
 
 ENV PYTHONPATH=/app
 # Expose the port the app runs on

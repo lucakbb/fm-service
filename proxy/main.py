@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.responses import StreamingResponse
-from proxy.llm_proxy import llm_proxy, response_generator
+from proxy.llm_proxy import llm_proxy, response_generator, llm_proxy_completions
 from proxy.config import get_settings
 from proxy.auth import get_profile_from_accesstoken, get_or_create_apikey, verify_token
 from proxy.provider import get_all_models
@@ -121,7 +121,7 @@ async def completion(
     if data['stream']:
         data['stream_options'] = {"include_usage": True}
     
-    response = await llm_proxy(
+    response = await llm_proxy_completions(
         endpoint=settings.ocf_head_addr+"/v1/service/llm/v1/",
         api_key=token,
         **data,
