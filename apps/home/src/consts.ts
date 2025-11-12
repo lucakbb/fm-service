@@ -22,7 +22,3 @@ export const DOCS: Metadata = {
   TITLE: "Docs",
   DESCRIPTION: "A collection of guides.",
 };
-
-import { ARENA_CONFIG } from "../arena.config.js";
-
-export const ARENA_AUTH = ARENA_CONFIG;
