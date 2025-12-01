@@ -200,6 +200,7 @@ async def llm_proxy_embeddings(endpoint, api_key, **kwargs) -> ModelResponse:
                 }
             }
             
+            # Only supported in text-embedding-3 and later models
             if kwargs.get('dimensions') is not None:
                 embedding_params['dimensions'] = kwargs.get('dimensions')
             
